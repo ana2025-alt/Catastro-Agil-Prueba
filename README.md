@@ -27,6 +27,9 @@ El proyecto está estructurado bajo un diseño modular limpio y profesional:
   * `index.html`: Landing page institucional con tarjetas interactivas de servicios
   * `login.html`: Interfaz de autenticación y registro de nuevos clientes
   * `boveda.html`: Panel de control privado (Ledger) para la gestión y estampado de nuevos bloques
+ 
+  * <img width="1346" height="641" alt="image" src="https://github.com/user-attachments/assets/3b0db988-5991-4a71-bf70-02af9b6ab0ef" />
+
 
 ---
 
