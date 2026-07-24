@@ -6,45 +6,100 @@
     <title>Catastro Ágil | Inicio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 min-h-screen">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen transition-colors flex flex-col justify-between">
 
-    <!-- Canvas -->
     <canvas id="canvasParticulas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
     <!-- Navbar -->
     <nav class="sticky top-0 z-40 glass-panel border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <span class="font-bold text-lg"><i class="fa-solid fa-scale-balanced text-cyan-400 mr-2"></i>Catastro Ágil</span>
+            <span class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-cyan-400"></i>Catastro Ágil</span>
             <div class="flex items-center gap-4">
-                <button id="theme-toggle" class="p-2 rounded-full bg-slate-200 dark:bg-slate-800"><i class="fa-solid fa-moon dark:hidden"></i><i class="fa-solid fa-sun hidden dark:inline"></i></button>
-                <a href="login.html" class="bg-cyan-600 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg">Portal</a>
+                <button id="theme-toggle" class="p-2.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-yellow-400 transition shadow-md" title="Cambiar Tema">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+                </button>
+                <a href="login.html" class="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg transition">Portal</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 py-16">
-        <div class="fondo-banner rounded-3xl p-12 text-white shadow-2xl">
+    <!-- Hero Section -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-12 text-center">
+        <div class="fondo-banner rounded-3xl p-12 text-white shadow-2xl border border-white/10">
             <h1 class="text-4xl md:text-5xl font-black mb-4">Custodia Digital Inmutable</h1>
-            <p class="text-lg opacity-90 max-w-2xl">Protegemos tu patrimonio mediante tecnología de registros distribuidos. Accede a tu bóveda para gestionar títulos y certificados.</p>
+            <p class="text-lg opacity-90 max-w-2xl mx-auto font-light">Protegemos tu patrimonio mediante tecnología distribuida y firmas criptográficas SHA-256.</p>
         </div>
     </div>
 
-    <!-- Info Cards -->
-    <div class="max-w-7xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 relative z-10">
-        <div class="glass-panel p-8 rounded-2xl text-center"><i class="fa-solid fa-house text-3xl text-cyan-500 mb-4"></i><h3 class="font-bold">Inmuebles</h3></div>
-        <div class="glass-panel p-8 rounded-2xl text-center"><i class="fa-solid fa-car text-3xl text-cyan-500 mb-4"></i><h3 class="font-bold">Vehículos</h3></div>
-        <div class="glass-panel p-8 rounded-2xl text-center"><i class="fa-solid fa-fingerprint text-3xl text-cyan-500 mb-4"></i><h3 class="font-bold">Identidad</h3></div>
+    <!-- Tarjetas Interactivas -->
+    <div class="max-w-7xl mx-auto px-4 py-6 grid md:grid-cols-3 gap-6 relative z-10 w-full">
+        <!-- Inmuebles -->
+        <div onclick="mostrarInfo('Inmuebles', 'Respaldo inmutable de títulos de propiedad raíz, planos catastrales y permisos municipales validados criptográficamente en la red.')" class="glass-panel p-8 rounded-2xl text-center cursor-pointer hover:border-cyan-500 hover:scale-105 transition shadow-xl">
+            <i class="fa-solid fa-house text-4xl text-cyan-500 mb-4"></i>
+            <h3 class="font-bold text-xl mb-2">Inmuebles</h3>
+            <p class="text-xs opacity-70">Haz clic para ver detalles</p>
+        </div>
+        <!-- Vehículos -->
+        <div onclick="mostrarInfo('Vehículos', 'Custodia de títulos de propiedad automotor, certificados de origen y registros de traspasos legales protegidos contra alteraciones.')" class="glass-panel p-8 rounded-2xl text-center cursor-pointer hover:border-cyan-500 hover:scale-105 transition shadow-xl">
+            <i class="fa-solid fa-car text-4xl text-cyan-500 mb-4"></i>
+            <h3 class="font-bold text-xl mb-2">Vehículos</h3>
+            <p class="text-xs opacity-70">Haz clic para ver detalles</p>
+        </div>
+        <!-- Identidad -->
+        <div onclick="mostrarInfo('Identidad Vital', 'Resguardo seguro de documentos de identidad, pasaportes y actas constitutivas respaldadas bajo estrictos protocolos de privacidad.')" class="glass-panel p-8 rounded-2xl text-center cursor-pointer hover:border-cyan-500 hover:scale-105 transition shadow-xl">
+            <i class="fa-solid fa-fingerprint text-4xl text-cyan-500 mb-4"></i>
+            <h3 class="font-bold text-xl mb-2">Identidad</h3>
+            <p class="text-xs opacity-70">Haz clic para ver detalles</p>
+        </div>
+    </div>
+
+    <!-- Modal Informativo -->
+    <div id="infoModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-md p-6 rounded-2xl text-white space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 id="modalTitulo" class="font-bold text-xl text-cyan-400"></h3>
+                <button onclick="cerrarInfo()" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <p id="modalTexto" class="text-sm text-slate-300 leading-relaxed"></p>
+            <button onclick="cerrarInfo()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-lg text-sm transition">Entendido</button>
+        </div>
     </div>
 
     <!-- WhatsApp -->
-    <a href="https://wa.me/584120000000" class="fixed bottom-8 right-8 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl shadow-xl z-50 hover:scale-110 transition">
+    <a href="https://wa.me/584120000000" target="_blank" class="fixed bottom-8 right-8 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl shadow-xl z-50 hover:scale-110 transition">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <script src="/js/app.js"></script>
-    <script src="/js/particles.js"></script>
+    <footer class="text-center py-6 text-xs opacity-60 relative z-10">
+        &copy; 2026 Catastro Ágil - Sistema Nacional de Resguardo Territorial
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script>
+        // Tema Claro / Oscuro Funcional
+        const htmlElement = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            });
+        }
+        if (localStorage.getItem('theme') === 'light') htmlElement.classList.remove('dark');
+        else htmlElement.classList.add('dark');
+
+        // Funciones del Modal Informativo
+        function mostrarInfo(titulo, texto) {
+            document.getElementById('modalTitulo').innerText = titulo;
+            document.getElementById('modalTexto').innerText = texto;
+            document.getElementById('infoModal').classList.remove('hidden');
+        }
+        function cerrarInfo() {
+            document.getElementById('infoModal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html> 

@@ -12,9 +12,16 @@
 
     <canvas id="canvasParticulas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <div class="glass-panel w-full max-w-5xl rounded-2xl shadow-2xl border border-white/10 relative z-10 overflow-hidden flex flex-col md:flex-row">
+    <!-- Botón Volver al Inicio -->
+    <div class="absolute top-6 left-6 z-20">
+        <a href="index.html" class="glass-panel px-4 py-2 rounded-lg text-xs font-bold text-slate-200 hover:text-cyan-400 border border-white/10 flex items-center gap-2 transition shadow-lg">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+        </a>
+    </div>
+
+    <div class="glass-panel w-full max-w-5xl rounded-2xl shadow-2xl border border-white/10 relative z-10 overflow-hidden flex flex-col md:flex-row mt-12 md:mt-0">
         
-        <!-- COLUMNA IZQUIERDA: IMAGEN -->
+        <!-- Columna Izquierda: Imagen de Planos -->
         <div class="hidden md:block md:w-1/2 relative bg-slate-900 border-r border-white/10 img-planos">
             <div class="absolute inset-0 bg-slate-900/40 z-10"></div>
             <div class="absolute bottom-8 left-8 z-20">
@@ -23,9 +30,9 @@
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA: FORMULARIO -->
+        <!-- Columna Derecha: Formulario de Login -->
         <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-            <div class="text-center mb-10">
+            <div class="text-center mb-8">
                 <h1 class="text-3xl font-black uppercase tracking-widest text-white">CATASTRO <span class="text-cyan-400">ÁGIL</span></h1>
                 <p class="text-slate-400 text-xs mt-2 font-mono">Bóveda de Resguardo Territorial</p>
             </div>
@@ -33,32 +40,35 @@
             <form id="loginForm" class="space-y-6 max-w-sm mx-auto w-full">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1.5">Correo Electrónico</label>
-                    <input type="email" id="email" required placeholder="ejemplo@dominio.com" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-cyan-400 outline-none">
+                    <input type="email" id="email" required placeholder="ejemplo@dominio.com" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-cyan-400 outline-none transition">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1.5">Clave de Acceso</label>
-                    <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-cyan-400 outline-none">
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-cyan-400 outline-none transition">
                 </div>
-                <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black uppercase py-3 rounded-lg text-sm">
+                <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black uppercase py-3 rounded-lg text-sm shadow-lg transition">
                     Autenticar Acceso
                 </button>
             </form>
 
-            <div class="mt-8 text-center">
-                <button onclick="toggleModal(true)" class="text-xs text-cyan-400 hover:underline">¿Cliente nuevo? Registrarse aquí</button>
+            <div class="mt-8 text-center border-t border-slate-800 pt-4">
+                <button onclick="toggleModal(true)" class="text-xs text-cyan-400 hover:underline transition">¿Cliente nuevo? Registrarse aquí</button>
             </div>
         </div>
     </div>
 
     <!-- Modal Registro -->
     <div id="registerModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-700 w-full max-w-md p-6 rounded-2xl text-white">
-            <h3 class="font-bold text-cyan-400 mb-4">Nuevo Registro</h3>
+        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-md p-6 rounded-2xl text-white space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="font-bold text-cyan-400">Nuevo Registro de Cliente</h3>
+                <button onclick="toggleModal(false)" class="text-slate-400 hover:text-white text-xl">&times;</button>
+            </div>
             <form id="registerForm" class="space-y-3">
-                <input type="text" id="regCedula" placeholder="Cédula" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm">
-                <input type="text" id="regNombre" placeholder="Nombre" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm">
-                <input type="email" id="regEmail" placeholder="Correo" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm">
-                <button type="submit" class="w-full bg-emerald-600 font-bold py-2 rounded-lg text-sm">Guardar Cliente</button>
+                <input type="text" id="regCedula" placeholder="Cédula" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm outline-none focus:border-cyan-400">
+                <input type="text" id="regNombre" placeholder="Nombre Completo" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm outline-none focus:border-cyan-400">
+                <input type="email" id="regEmail" placeholder="Correo (.com)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm outline-none focus:border-cyan-400">
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-2.5 rounded-lg text-sm transition mt-2">Guardar Cliente</button>
             </form>
         </div>
     </div>
