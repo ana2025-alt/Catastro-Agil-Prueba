@@ -3,92 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catastro Ágil | Bóveda Principal</title>
-    
-    <!-- Librerías Externas -->
+    <title>Catastro Ágil | Soluciones Territoriales</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Archivos Modulares Propios -->
     <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="tech-bg-animated text-slate-200 min-h-screen flex flex-col relative">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-500">
 
-    <!-- Canvas de partículas -->
+    <!-- Fondo de Partículas -->
     <canvas id="canvasParticulas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- Navegación -->
-    <nav class="glass-panel sticky top-0 z-50 border-b border-white/10">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-shield-halved text-cyan-400 text-2xl drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]"></i>
-                <h1 class="font-black text-xl tracking-widest text-white">CATASTRO <span class="text-cyan-400">ÁGIL</span></h1>
-            </div>
-            <div class="flex items-center gap-4">
-                <span id="userBadge" class="hidden sm:inline-block text-xs bg-slate-800/80 px-3 py-1.5 rounded-md font-mono text-cyan-300 border border-cyan-900 shadow-[0_0_10px_rgba(6,182,212,0.2)]"></span>
-                <button onclick="cerrarSesion()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2 transition duration-300 relative z-50">
-                    <i class="fa-solid fa-power-off"></i> Desconectar
-                </button>
-            </div>
+    <!-- Header Profesional -->
+    <header class="relative z-20 max-w-4xl mx-auto px-6 py-12 text-center">
+        <div class="flex justify-end mb-4">
+            <button id="theme-toggle" class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 transition">
+                <i class="fa-solid fa-moon dark:hidden"></i>
+                <i class="fa-solid fa-sun hidden dark:inline"></i>
+            </button>
         </div>
-    </nav>
-
-    <!-- Contenedor Principal -->
-    <main class="flex-grow max-w-6xl mx-auto w-full px-4 py-8 relative z-10">
-        
-        <div class="fondo-banner rounded-2xl p-8 mb-8 border-l-4 border-l-cyan-400 border-t border-r border-b border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] relative overflow-hidden">
-            <div class="absolute right-[-20px] top-[-20px] opacity-10">
-                <i class="fa-solid fa-fingerprint text-[150px] text-cyan-100"></i>
-            </div>
-            <h2 class="text-3xl font-black uppercase tracking-tight text-white drop-shadow-md relative z-10">Bóveda Criptográfica</h2>
-            <p class="text-slate-300 text-sm mt-2 max-w-2xl relative z-10">
-                Red inmutable de resguardo territorial. Cada documento adjunto generará una firma SHA-256 única y quedará estampado en el libro mayor de Supabase.
-            </p>
+        <h1 class="text-5xl font-extrabold mb-4 text-slate-900 dark:text-white">Catastro Ágil ⚖️</h1>
+        <p class="text-lg opacity-80 mb-6">Custodia Digital Inmutable | Bóveda de Resguardo Territorial</p>
+        <div class="inline-block px-4 py-1 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-sm font-semibold border border-cyan-500/30">
+            ITSU 2026
         </div>
+    </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1">
-                <div class="glass-panel p-6 rounded-2xl neon-border transition duration-300">
-                    <h3 class="text-lg font-bold mb-4 pb-3 border-b border-slate-700 flex items-center text-white">
-                        <i class="fa-solid fa-cloud-arrow-up text-cyan-400 mr-2"></i> Nuevo Bloque
-                    </h3>
-                    <form id="uploadForm" class="space-y-5">
-                        <div>
-                            <label class="block text-xs font-black uppercase text-slate-400 mb-1">Clasificación</label>
-                            <select id="categoria" class="w-full px-3 py-2.5 text-sm rounded-lg bg-slate-800 border border-slate-600 text-white outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition">
-                                <option value="Título de Propiedad Raíz">Título de Propiedad Raíz</option>
-                                <option value="Certificado de Vehículo">Certificado de Vehículo</option>
-                                <option value="Documentación Legal">Documentación Legal</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-black uppercase text-slate-400 mb-1">Archivo de Origen</label>
-                            <input type="file" id="archivo" accept=".pdf, image/*" required class="w-full text-sm text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-cyan-900/30 file:text-cyan-300 hover:file:bg-cyan-900/50 cursor-pointer transition">
-                        </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black uppercase tracking-wider py-3 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.4)] transition active:scale-95 flex justify-center items-center gap-2 text-sm">
-                            <i class="fa-solid fa-link"></i> Estampar Sello
-                        </button>
-                    </form>
-                </div>
-            </div>
+    <main class="relative z-20 max-w-4xl mx-auto px-6 pb-20">
+        <!-- Sección de Propósito -->
+        <section class="glass-panel p-8 rounded-2xl mb-12">
+            <h2 class="text-2xl font-bold mb-4">Sobre el Proyecto</h2>
+            <p>Solución avanzada de registro inmobiliario y vehicular basada en tecnología de libros mayores distribuidos. Garantizamos la integridad y trazabilidad de los títulos de propiedad mediante firmas criptográficas únicas.</p>
+        </section>
 
-            <div class="lg:col-span-2">
-                <div class="glass-panel p-6 rounded-2xl neon-border transition duration-300">
-                    <h3 class="text-lg font-bold mb-4 pb-3 border-b border-slate-700 flex items-center justify-between text-white">
-                        <span><i class="fa-solid fa-server text-cyan-400 mr-2"></i> Ledger Personal</span>
-                        <span class="text-[10px] uppercase font-black text-cyan-300 bg-cyan-900/30 border border-cyan-800/50 px-3 py-1 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.2)] animate-pulse">
-                            <i class="fa-solid fa-signal mr-1"></i> En Línea
-                        </span>
-                    </h3>
-                    <div id="ledger-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                        <!-- Items cargados dinámicamente -->
-                    </div>
-                </div>
+        <!-- Tarjetas de Acceso -->
+        <section class="grid md:grid-cols-2 gap-6">
+            <a href="login.html" class="glass-panel p-6 rounded-2xl hover:border-cyan-500 transition-all flex flex-col gap-3">
+                <div class="text-3xl text-cyan-500">🔐</div>
+                <h3 class="text-xl font-bold">Acceder a mi Bóveda</h3>
+                <p class="text-sm opacity-70">Ingresa a tu panel de control para gestionar y minar nuevos bloques de propiedad.</p>
+            </a>
+            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-3">
+                <div class="text-3xl text-emerald-500">📋</div>
+                <h3 class="text-xl font-bold">Documentación Técnica</h3>
+                <p class="text-sm opacity-70">Consulta las especificaciones de seguridad y el protocolo de validación del sistema.</p>
             </div>
-        </div>
+        </section>
     </main>
 
-    <!-- Archivo de Lógica -->
+    <!-- WhatsApp Botón Flotante -->
+    <a href="https://wa.me/584120000000" class="fixed bottom-8 right-8 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl shadow-xl z-50 hover:scale-110 transition">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <script src="/js/app.js"></script>
+    <script src="/js/particles.js"></script>
 </body>
 </html> 
