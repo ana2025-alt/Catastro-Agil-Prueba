@@ -4,77 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catastro Ágil | Bóveda Principal</title>
+    
+    <!-- Librerías Externas -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        /* Animación para el banner */
-        @keyframes moverFondo {
-            0% { background-position: 0% 0%; background-size: 100%; }
-            100% { background-position: 100% 100%; background-size: 120%; }
-        }
-
-        .fondo-banner {
-            background-color: #0f172a;
-            background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('/img/hero-bg.jpg');
-            background-repeat: no-repeat;
-            animation: moverFondo 30s alternate infinite ease-in-out;
-        }
-
-        /* Fondo animado de la página principal */
-        .tech-bg-animated {
-            background-color: #0f172a;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
-            background-size: 200% 200%;
-            animation: gradientMovement 15s ease infinite;
-            position: relative;
-            overflow-x: hidden;
-            margin: 0;
-        }
-        @keyframes gradientMovement {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .tech-bg-animated::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-            animation: gridShift 20s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes gridShift {
-            from { transform: translateY(0); }
-            to { transform: translateY(40px); }
-        }
-
-        /* Efecto Cristal Fino */
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .neon-border:hover {
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
-            border-color: rgba(6, 182, 212, 0.5);
-        }
-    </style>
-    
-    <script>
-        if (!localStorage.getItem('usuario_id')) window.location.replace('login.html');
-    </script>
+    <!-- Archivos Modulares Propios -->
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body class="tech-bg-animated text-slate-200 min-h-screen flex flex-col relative">
 
-    <!-- Canvas de partículas nativo (Fondo) -->
+    <!-- Canvas de partículas -->
     <canvas id="canvasParticulas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
+    <!-- Navegación -->
     <nav class="glass-panel sticky top-0 z-50 border-b border-white/10">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -90,7 +33,7 @@
         </div>
     </nav>
 
-    <!-- Contenedor Principal (z-10 para estar por encima de las partículas) -->
+    <!-- Contenedor Principal -->
     <main class="flex-grow max-w-6xl mx-auto w-full px-4 py-8 relative z-10">
         
         <div class="fondo-banner rounded-2xl p-8 mb-8 border-l-4 border-l-cyan-400 border-t border-r border-b border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] relative overflow-hidden">
@@ -138,95 +81,14 @@
                         </span>
                     </h3>
                     <div id="ledger-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                        <!-- Items del ledger -->
+                        <!-- Items cargados dinámicamente -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Tu lógica de la aplicación -->
+    <!-- Archivo de Lógica -->
     <script src="/js/app.js"></script>
-
-    <!-- Motor Mejorado de Partículas Native Canvas -->
-    <script>
-        (function() {
-            const canvas = document.getElementById('canvasParticulas');
-            const ctx = canvas.getContext('2d');
-
-            function ajustarTamano() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            ajustarTamano();
-            window.addEventListener('resize', ajustarTamano);
-
-            const imagenes = [];
-            let imagenesCargadas = 0;
-
-            function comprobarCarga() {
-                imagenesCargadas++;
-                if (imagenesCargadas === 2) {
-                    iniciarAnimacion();
-                }
-            }
-
-            const imgCasa = new Image();
-            imgCasa.onload = comprobarCarga;
-            imgCasa.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwNmI2ZDQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMCA5bDktNyA5IDd2MTFhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJ6Ij48L3BhdGg+PHBvbHlsaW5lIHBvaW50cz0iOSAyMiA5IDEyIDE1IDEyIDE1IDIyIj48L3BvbHlsaW5lPjwvc3ZnPg==";
-            imagenes.push(imgCasa);
-
-            const imgPlano = new Image();
-            imgPlano.onload = comprobarCarga;
-            imgPlano.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSIzIiB5PSIzIiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHJ4PSIyIj48L3JlY3Q+PHBhdGggZD0iTTMgOWgxOE05IDIxdjlNMISTUgOXYxMiI+PC9wYXRoPjwvc3ZnPg==";
-            imagenes.push(imgPlano);
-
-            const cantidadParticulas = 25;
-            const particulas = [];
-
-            class Particula {
-                constructor() {
-                    this.reset();
-                    this.y = Math.random() * canvas.height;
-                }
-
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = canvas.height + 40;
-                    this.velocidadY = 0.3 + Math.random() * 0.5;
-                    this.velocidadX = (Math.random() - 0.5) * 0.3;
-                    this.tamano = 16 + Math.random() * 16;
-                    this.opacidad = 0.15 + Math.random() * 0.35;
-                    this.imagen = imagenes[Math.floor(Math.random() * imagenes.length)];
-                }
-
-                actualizar() {
-                    this.y -= this.velocidadY;
-                    this.x += this.velocidadX;
-                    if (this.y < -40) this.reset();
-                }
-
-                dibujar() {
-                    ctx.globalAlpha = this.opacidad;
-                    ctx.drawImage(this.imagen, this.x, this.y, this.tamano, this.tamano);
-                }
-            }
-
-            function iniciarAnimacion() {
-                for (let i = 0; i < cantidadParticulas; i++) {
-                    particulas.push(new Particula());
-                }
-                function animar() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    particulas.forEach(p => {
-                        p.actualizar();
-                        p.dibujar();
-                    });
-                    requestAnimationFrame(animar);
-                }
-                animar();
-            }
-        })();
-    </script>
 </body>
 </html> 

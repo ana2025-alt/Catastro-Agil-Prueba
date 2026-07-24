@@ -1,110 +1,111 @@
+// public/js/app.js
+
+// === 1. CONTROL DE SESIÓN Y DATOS ===
 document.addEventListener('DOMContentLoaded', () => {
+    // Verificar sesión (Protección de ruta)
+    if (!localStorage.getItem('usuario_id')) {
+        window.location.replace('login.html');
+        return;
+    }
+
+    // Cargar Badge de Usuario
     const userBadge = document.getElementById('userBadge');
     if (userBadge) {
         userBadge.innerText = `[ ID: ${localStorage.getItem('usuario_id')} ] ${localStorage.getItem('usuario_nombre')}`;
     }
 
+    // Inicializar Ledger
     if (document.getElementById('ledger-list')) {
         cargarDocumentos();
     }
-
-    const uploadForm = document.getElementById('uploadForm');
-    if (uploadForm) {
-        uploadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const btnSubmit = uploadForm.querySelector('button[type="submit"]');
-            const originalText = btnSubmit.innerHTML;
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Procesando...';
-
-            const archivoInput = document.getElementById('archivo');
-            const categoriaSelect = document.getElementById('categoria');
-            const usuario_id = localStorage.getItem('usuario_id');
-
-            const formData = new FormData();
-            formData.append('file', archivoInput.files[0]);
-            formData.append('categoria', categoriaSelect.value);
-            formData.append('usuario_id', usuario_id);
-
-            try {
-                const res = await fetch('/api/subir', { method: 'POST', body: formData });
-                const resultado = await res.json();
-
-                if (resultado.status === 'success') {
-                    alert(`✅ ¡BLOQUE ESTAMPADO EN EL LEDGER!\n\nSHA-256 Generado:\n${resultado.hash}`);
-                    uploadForm.reset();
-                    cargarDocumentos();
-                } else {
-                    alert(`❌ Error del Nodo: ${resultado.message}`);
-                }
-            } catch (err) {
-                alert("❌ Fallo de conexión con Vercel.");
-            } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = originalText;
-            }
-        });
-    }
 });
 
-async function cargarDocumentos() {
-    const usuario_id = localStorage.getItem('usuario_id');
-    const container = document.getElementById('ledger-list');
-    
-    if (!container) return;
-    container.innerHTML = `<div class="text-center py-10 text-cyan-400 text-sm"><i class="fa-solid fa-circle-notch animate-spin mr-2 text-2xl"></i><br><br>Sincronizando con Supabase...</div>`;
-
-    try {
-        const res = await fetch(`/api/documentos/${usuario_id}`);
-        const data = await res.json();
-
-        // Validar si el backend mandó un error literal
-        if (data.error_real) {
-            container.innerHTML = `<p class="text-sm text-red-400 text-center font-mono bg-red-900/20 p-4 rounded-lg border border-red-500/30">Fallo en DB: ${data.error_real}</p>`;
-            return;
-        }
-
-        if (!Array.isArray(data) || data.length === 0) {
-            container.innerHTML = `
-                <div class="text-center py-12 bg-slate-800/30 rounded-xl border border-dashed border-slate-600">
-                    <i class="fa-solid fa-box-open text-5xl text-slate-600 mb-4"></i>
-                    <p class="text-sm font-bold text-slate-400">Bóveda vacía.</p>
-                    <p class="text-xs text-slate-500 mt-1">Aún no tienes bloques minados en tu cuenta.</p>
-                </div>`;
-            return;
-        }
-
-        container.innerHTML = data.map(doc => {
-            const esImagen = doc.nombre_archivo.toLowerCase().match(/\.(jpeg|jpg|gif|png)$/) != null;
-            const icono = esImagen ? 'fa-image text-emerald-400' : 'fa-file-pdf text-rose-400';
-
-            return `
-            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:border-cyan-500/50 transition duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] group">
-                <div>
-                    <h4 class="font-bold text-slate-200 text-sm flex items-center">
-                        <i class="fa-solid ${icono} mr-3 text-lg"></i> ${doc.nombre_archivo}
-                    </h4>
-                    <p class="text-xs font-mono text-slate-400 mt-2 pl-7 border-l-2 border-slate-600 ml-2">
-                        <span class="text-cyan-400 font-bold">${doc.categoria}</span>
-                    </p>
-                </div>
-                <div class="sm:text-right flex flex-col items-end">
-                    <span class="inline-block text-[10px] font-mono font-bold text-cyan-300 bg-cyan-900/40 border border-cyan-700/50 px-2.5 py-1.5 rounded uppercase tracking-wider">
-                        <i class="fa-solid fa-fingerprint mr-1 opacity-70"></i> ${doc.sha256_hash.substring(0, 16)}...
-                    </span>
-                    <a href="${doc.url_storage}" target="_blank" class="block text-xs font-bold text-slate-400 group-hover:text-cyan-400 transition mt-3 bg-slate-900 px-3 py-1.5 rounded border border-slate-700 hover:border-cyan-500">
-                        <i class="fa-solid fa-eye mr-1"></i> Abrir Documento Original
-                    </a>
-                </div>
-            </div>`;
-        }).join('');
-    } catch (error) {
-        container.innerHTML = `<p class="text-sm text-red-400 text-center font-bold bg-red-900/20 p-4 rounded-lg">Error crítico al conectar con Vercel. Revisa la consola.</p>`;
-    }
+// Cerrar Sesión
+window.cerrarSesion = function() {
+    localStorage.removeItem('usuario_id');
+    localStorage.removeItem('usuario_nombre');
+    window.location.replace('login.html');
 }
 
-function cerrarSesion() {
-    localStorage.clear();
-    window.location.replace('login.html');
-} 
+// Cargar Documentos del Ledger
+async function cargarDocumentos() {
+    // ... [Aquí va todo tu código de cargarDocumentos que ya tenías, manténlo igual]
+}
+
+// Subir Documento
+const uploadForm = document.getElementById('uploadForm');
+if (uploadForm) {
+    uploadForm.addEventListener('submit', async (e) => {
+        // ... [Aquí va todo tu código del submit del formulario, manténlo igual]
+    });
+}
+
+// === 2. MOTOR DE PARTÍCULAS ===
+(function() {
+    const canvas = document.getElementById('canvasParticulas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function ajustarTamano() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    ajustarTamano();
+    window.addEventListener('resize', ajustarTamano);
+
+    const imagenes = [];
+    let imagenesCargadas = 0;
+
+    function comprobarCarga() {
+        imagenesCargadas++;
+        if (imagenesCargadas === 2) iniciarAnimacion();
+    }
+
+    // Iconos en Base64
+    const imgCasa = new Image();
+    imgCasa.onload = comprobarCarga;
+    imgCasa.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwNmI2ZDQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMCA5bDktNyA5IDd2MTFhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJ6Ij48L3BhdGg+PHBvbHlsaW5lIHBvaW50cz0iOSAyMiA5IDEyIDE1IDEyIDE1IDIyIj48L3BvbHlsaW5lPjwvc3ZnPg==";
+    imagenes.push(imgCasa);
+
+    const imgPlano = new Image();
+    imgPlano.onload = comprobarCarga;
+    imgPlano.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSIzIiB5PSIzIiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHJ4PSIyIj48L3JlY3Q+PHBhdGggZD0iTTMgOWgxOE05IDIxdjlNMISTUgOXYxMiI+PC9wYXRoPjwvc3ZnPg==";
+    imagenes.push(imgPlano);
+
+    class Particula {
+        constructor() {
+            this.reset();
+            this.y = Math.random() * canvas.height;
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + 40;
+            this.velocidadY = 0.3 + Math.random() * 0.5;
+            this.velocidadX = (Math.random() - 0.5) * 0.3;
+            this.tamano = 16 + Math.random() * 16;
+            this.opacidad = 0.15 + Math.random() * 0.35;
+            this.imagen = imagenes[Math.floor(Math.random() * imagenes.length)];
+        }
+        actualizar() {
+            this.y -= this.velocidadY;
+            this.x += this.velocidadX;
+            if (this.y < -40) this.reset();
+        }
+        dibujar() {
+            ctx.globalAlpha = this.opacidad;
+            ctx.drawImage(this.imagen, this.x, this.y, this.tamano, this.tamano);
+        }
+    }
+
+    function iniciarAnimacion() {
+        const particulas = [];
+        for (let i = 0; i < 25; i++) particulas.push(new Particula());
+        
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particulas.forEach(p => { p.actualizar(); p.dibujar(); });
+            requestAnimationFrame(animar);
+        }
+        animar();
+    }
+})(); 
