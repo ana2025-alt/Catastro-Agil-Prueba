@@ -3,55 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catastro Ágil | Soluciones Territoriales</title>
+    <title>Catastro Ágil | Inicio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-500">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 min-h-screen">
 
-    <!-- Fondo de Partículas -->
+    <!-- Canvas -->
     <canvas id="canvasParticulas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- Header Profesional -->
-    <header class="relative z-20 max-w-4xl mx-auto px-6 py-12 text-center">
-        <div class="flex justify-end mb-4">
-            <button id="theme-toggle" class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 transition">
-                <i class="fa-solid fa-moon dark:hidden"></i>
-                <i class="fa-solid fa-sun hidden dark:inline"></i>
-            </button>
-        </div>
-        <h1 class="text-5xl font-extrabold mb-4 text-slate-900 dark:text-white">Catastro Ágil ⚖️</h1>
-        <p class="text-lg opacity-80 mb-6">Custodia Digital Inmutable | Bóveda de Resguardo Territorial</p>
-        <div class="inline-block px-4 py-1 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-sm font-semibold border border-cyan-500/30">
-            ITSU 2026
-        </div>
-    </header>
-
-    <main class="relative z-20 max-w-4xl mx-auto px-6 pb-20">
-        <!-- Sección de Propósito -->
-        <section class="glass-panel p-8 rounded-2xl mb-12">
-            <h2 class="text-2xl font-bold mb-4">Sobre el Proyecto</h2>
-            <p>Solución avanzada de registro inmobiliario y vehicular basada en tecnología de libros mayores distribuidos. Garantizamos la integridad y trazabilidad de los títulos de propiedad mediante firmas criptográficas únicas.</p>
-        </section>
-
-        <!-- Tarjetas de Acceso -->
-        <section class="grid md:grid-cols-2 gap-6">
-            <a href="login.html" class="glass-panel p-6 rounded-2xl hover:border-cyan-500 transition-all flex flex-col gap-3">
-                <div class="text-3xl text-cyan-500">🔐</div>
-                <h3 class="text-xl font-bold">Acceder a mi Bóveda</h3>
-                <p class="text-sm opacity-70">Ingresa a tu panel de control para gestionar y minar nuevos bloques de propiedad.</p>
-            </a>
-            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-3">
-                <div class="text-3xl text-emerald-500">📋</div>
-                <h3 class="text-xl font-bold">Documentación Técnica</h3>
-                <p class="text-sm opacity-70">Consulta las especificaciones de seguridad y el protocolo de validación del sistema.</p>
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-40 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <span class="font-bold text-lg"><i class="fa-solid fa-scale-balanced text-cyan-400 mr-2"></i>Catastro Ágil</span>
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="p-2 rounded-full bg-slate-200 dark:bg-slate-800"><i class="fa-solid fa-moon dark:hidden"></i><i class="fa-solid fa-sun hidden dark:inline"></i></button>
+                <a href="login.html" class="bg-cyan-600 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg">Portal</a>
             </div>
-        </section>
-    </main>
+        </div>
+    </nav>
 
-    <!-- WhatsApp Botón Flotante -->
+    <!-- Hero -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-16">
+        <div class="fondo-banner rounded-3xl p-12 text-white shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-black mb-4">Custodia Digital Inmutable</h1>
+            <p class="text-lg opacity-90 max-w-2xl">Protegemos tu patrimonio mediante tecnología de registros distribuidos. Accede a tu bóveda para gestionar títulos y certificados.</p>
+        </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="max-w-7xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 relative z-10">
+        <div class="glass-panel p-8 rounded-2xl text-center"><i class="fa-solid fa-house text-3xl text-cyan-500 mb-4"></i><h3 class="font-bold">Inmuebles</h3></div>
+        <div class="glass-panel p-8 rounded-2xl text-center"><i class="fa-solid fa-car text-3xl text-cyan-500 mb-4"></i><h3 class="font-bold">Vehículos</h3></div>
+        <div class="glass-panel p-8 rounded-2xl text-center"><i class="fa-solid fa-fingerprint text-3xl text-cyan-500 mb-4"></i><h3 class="font-bold">Identidad</h3></div>
+    </div>
+
+    <!-- WhatsApp -->
     <a href="https://wa.me/584120000000" class="fixed bottom-8 right-8 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl shadow-xl z-50 hover:scale-110 transition">
         <i class="fa-brands fa-whatsapp"></i>
     </a>

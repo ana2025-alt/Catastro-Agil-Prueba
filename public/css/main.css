@@ -1,35 +1,38 @@
 /* public/css/main.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
 
-body {
-    font-family: 'Inter', sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-}
+body { font-family: 'Inter', sans-serif; transition: background-color 0.3s; }
 
-/* Animaciones */
 @keyframes moverFondo {
     0% { background-position: 0% 0%; background-size: 100%; }
     100% { background-position: 100% 100%; background-size: 120%; }
 }
 
-/* Fondos */
+/* El fondo del Hero en la Bóveda (Index) */
 .fondo-banner {
     background-color: #0f172a;
-    background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('/img/hero-bg.jpg');
+    background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('../img/hero-bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     animation: moverFondo 30s alternate infinite ease-in-out;
 }
 
+/* El fondo del Login */
 .fondo-login {
     background-color: #0f172a;
-    background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 95, 0.95)), url('/img/login-bg.jpg');
+    background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), url('../img/login-bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     animation: moverFondo 30s alternate infinite ease-in-out;
 }
 
-/* Efecto Cristal (Soporta modo claro y oscuro) */
+/* Clase para la imagen de los Planos en el Login */
+.img-planos {
+    background-image: url('../img/planos-catastro.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
 .glass-panel {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
@@ -42,13 +45,4 @@ body {
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-/* Extras */
-.neon-border:hover {
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
-    border-color: rgba(6, 182, 212, 0.5);
-}
-
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(6,182,212,0.5); border-radius: 10px; } 
+} 
