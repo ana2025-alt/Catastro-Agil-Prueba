@@ -1,5 +1,24 @@
 // public/js/app.js
 
+// === SISTEMA DE NOTIFICACIONES TOAST (Reemplaza el alert feo) ===
+function mostrarNotificacion(mensaje, tipo = 'success') {
+    const existing = document.getElementById('notificacion-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'notificacion-toast';
+    toast.className = `fixed bottom-5 right-5 z-50 px-6 py-3 rounded-xl shadow-2xl text-white font-bold flex items-center gap-3 transition-all transform translate-y-0 ${
+        tipo === 'success' ? 'bg-emerald-600 border border-emerald-400' : 'bg-red-600 border border-red-400'
+    }`;
+    toast.innerHTML = `<i class="fa-solid ${tipo === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'} text-lg"></i> <span>${mensaje}</span>`;
+    
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
 // === 1. CONTROL DE SESIÓN Y LEDGER ===
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('ledger-list')) {
@@ -71,11 +90,11 @@ if (uploadForm) {
             const res = await fetch('/api/subir', { method: 'POST', body: formData });
             const resultado = await res.json();
             if (resultado.status === 'success') {
-                alert(`✅ ¡Bloque estampado con éxito!`);
+                mostrarNotificacion("¡Bloque estampado con éxito en Supabase!", "success");
                 uploadForm.reset();
                 cargarDocumentos();
             } else {
-                alert(`❌ Error: ${resultado.message}`);
+                mostrarNotificacion(`Error: ${resultado.message}`, "error");
             }
         } finally {
             btnSubmit.disabled = false;
