@@ -8,21 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="fondo-login min-h-screen flex flex-col items-center justify-center text-slate-200 p-4 relative">
+<body class="fondo-login min-h-screen flex flex-col items-center justify-center p-4 relative">
 
     <canvas id="canvasParticulas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- Botón Volver al Inicio -->
-    <div class="absolute top-6 left-6 z-20">
-        <a href="index.html" class="glass-panel px-4 py-2 rounded-lg text-xs font-bold text-slate-200 hover:text-cyan-400 border border-white/10 flex items-center gap-2 transition shadow-lg">
+    <!-- Controles Superiores -->
+    <div class="absolute top-6 left-6 right-6 z-20 flex justify-between items-center max-w-5xl mx-auto w-full">
+        <a href="index.html" class="glass-panel px-4 py-2 rounded-lg text-xs font-bold hover:text-cyan-400 flex items-center gap-2 transition shadow-lg">
             <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
         </a>
+        <button id="theme-toggle" class="p-2.5 rounded-full bg-slate-800 text-yellow-400 transition shadow-lg cursor-pointer" title="Cambiar Tema">
+            <i class="fa-solid fa-moon dark:hidden"></i>
+            <i class="fa-solid fa-sun hidden dark:inline"></i>
+        </button>
     </div>
 
-    <div class="glass-panel w-full max-w-5xl rounded-2xl shadow-2xl border border-white/10 relative z-10 overflow-hidden flex flex-col md:flex-row mt-12 md:mt-0">
+    <div class="glass-panel w-full max-w-5xl rounded-2xl shadow-2xl border relative z-10 overflow-hidden flex flex-col md:flex-row mt-16 md:mt-0">
         
-        <!-- Columna Izquierda: Imagen de Planos -->
-        <div class="hidden md:block md:w-1/2 relative bg-slate-900 border-r border-white/10 img-planos">
+        <div class="hidden md:block md:w-1/2 relative bg-slate-900 border-r img-planos">
             <div class="absolute inset-0 bg-slate-900/40 z-10"></div>
             <div class="absolute bottom-8 left-8 z-20">
                 <p class="text-cyan-400 font-mono text-xs uppercase tracking-widest mb-1"><i class="fa-solid fa-satellite mr-2"></i>Conexión Segura</p>
@@ -30,50 +33,61 @@
             </div>
         </div>
 
-        <!-- Columna Derecha: Formulario de Login -->
         <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-black uppercase tracking-widest text-white">CATASTRO <span class="text-cyan-400">ÁGIL</span></h1>
-                <p class="text-slate-400 text-xs mt-2 font-mono">Bóveda de Resguardo Territorial</p>
+                <h1 class="text-3xl font-black uppercase tracking-widest">CATASTRO <span class="text-cyan-400">ÁGIL</span></h1>
+                <p class="text-xs mt-2 font-mono opacity-70">Bóveda de Resguardo Territorial</p>
             </div>
 
             <form id="loginForm" class="space-y-6 max-w-sm mx-auto w-full">
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-1.5">Correo Electrónico</label>
+                    <label class="block text-xs font-bold uppercase mb-1.5 opacity-80">Correo Electrónico</label>
                     <input type="email" id="email" required placeholder="ejemplo@dominio.com" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-cyan-400 outline-none transition">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-1.5">Clave de Acceso</label>
+                    <label class="block text-xs font-bold uppercase mb-1.5 opacity-80">Clave de Acceso</label>
                     <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:border-cyan-400 outline-none transition">
                 </div>
-                <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black uppercase py-3 rounded-lg text-sm shadow-lg transition">
+                <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black uppercase py-3 rounded-lg text-sm shadow-lg transition cursor-pointer">
                     Autenticar Acceso
                 </button>
             </form>
 
-            <div class="mt-8 text-center border-t border-slate-800 pt-4">
-                <button onclick="toggleModal(true)" class="text-xs text-cyan-400 hover:underline transition">¿Cliente nuevo? Registrarse aquí</button>
+            <div class="mt-8 text-center border-t border-slate-700/50 pt-4">
+                <button onclick="toggleModal(true)" class="text-xs text-cyan-400 hover:underline transition cursor-pointer">¿Cliente nuevo? Registrarse aquí</button>
             </div>
         </div>
     </div>
 
     <!-- Modal Registro -->
     <div id="registerModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-md p-6 rounded-2xl text-white space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div class="glass-panel w-full max-w-md p-6 rounded-2xl space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b pb-3 border-slate-700">
                 <h3 class="font-bold text-cyan-400">Nuevo Registro de Cliente</h3>
-                <button onclick="toggleModal(false)" class="text-slate-400 hover:text-white text-xl">&times;</button>
+                <button onclick="toggleModal(false)" class="text-xl cursor-pointer">&times;</button>
             </div>
             <form id="registerForm" class="space-y-3">
-                <input type="text" id="regCedula" placeholder="Cédula" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm outline-none focus:border-cyan-400">
-                <input type="text" id="regNombre" placeholder="Nombre Completo" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm outline-none focus:border-cyan-400">
-                <input type="email" id="regEmail" placeholder="Correo (.com)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm outline-none focus:border-cyan-400">
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-2.5 rounded-lg text-sm transition mt-2">Guardar Cliente</button>
+                <input type="text" id="regCedula" placeholder="Cédula" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm text-white outline-none focus:border-cyan-400">
+                <input type="text" id="regNombre" placeholder="Nombre Completo" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm text-white outline-none focus:border-cyan-400">
+                <input type="email" id="regEmail" placeholder="Correo (.com)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm text-white outline-none focus:border-cyan-400">
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-2.5 rounded-lg text-sm text-white transition mt-2 cursor-pointer">Guardar Cliente</button>
             </form>
         </div>
     </div>
 
     <script src="js/particles.js"></script>
     <script src="js/auth.js"></script>
+    <script>
+        const htmlElement = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'light') htmlElement.classList.remove('dark');
+        else htmlElement.classList.add('dark');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            });
+        }
+    </script>
 </body>
 </html> 

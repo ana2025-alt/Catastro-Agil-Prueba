@@ -1,14 +1,32 @@
 /* public/css/main.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
 
-body { font-family: 'Inter', sans-serif; transition: background-color 0.3s; }
+:root {
+    --bg-main: #f8fafc;
+    --text-main: #1e293b;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+    --bg-main: #020617;
+    --text-main: #f1f5f9;
+    --glass-bg: rgba(15, 23, 42, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 @keyframes moverFondo {
     0% { background-position: 0% 0%; background-size: 100%; }
     100% { background-position: 100% 100%; background-size: 120%; }
 }
 
-/* El fondo del Hero en la Bóveda (Index) */
 .fondo-banner {
     background-color: #0f172a;
     background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('../img/hero-bg.jpg');
@@ -17,7 +35,6 @@ body { font-family: 'Inter', sans-serif; transition: background-color 0.3s; }
     animation: moverFondo 30s alternate infinite ease-in-out;
 }
 
-/* El fondo del Login */
 .fondo-login {
     background-color: #0f172a;
     background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), url('../img/login-bg.jpg');
@@ -26,7 +43,6 @@ body { font-family: 'Inter', sans-serif; transition: background-color 0.3s; }
     animation: moverFondo 30s alternate infinite ease-in-out;
 }
 
-/* Clase para la imagen de los Planos en el Login */
 .img-planos {
     background-image: url('../img/planos-catastro.jpg');
     background-size: cover;
@@ -34,15 +50,13 @@ body { font-family: 'Inter', sans-serif; transition: background-color 0.3s; }
 }
 
 .glass-panel {
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
 }
 
-.dark .glass-panel {
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+.neon-border:hover {
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+    border-color: rgba(6, 182, 212, 0.5);
 } 
